@@ -1,0 +1,9 @@
+{
+    "name":"aimclient",
+    "displayName":"AimClient",
+    "author":"awa",
+    "description":"for Aim",
+    "version":"1.0.0",
+    "minGameVersion":"130",
+    "hidden":true
+}

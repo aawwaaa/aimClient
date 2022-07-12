@@ -1,0 +1,73 @@
+({
+    tags:{
+        all:"@Tall",
+        content:"@Tcont",
+        style:"@Tstyle",
+    },
+    tagsConvert:{
+        content:"tags-1",
+        style:"tags-2",
+    },
+    rootURL:"http://mindustry.vicp.io:7002/api/acplugin",
+    /**
+        * 
+        * @param {function(pluginMeta[]):void} func 
+        */
+    list(func){
+        Http.get(this.rootURL+"/list",r=>{
+            let str=new java.lang.String(r.getResult(),"utf-8");
+            let json=eval("("+str+")");
+            let plugins=json.map(m=>{
+                let plugin=new PluginMeta();
+                plugin.id=m.id;
+                plugin.name=m.name;
+                plugin.pluginName=m.pluginName;
+                plugin.author=m.author;
+                plugin.desc=m.desc;
+                plugin.tags=m.tags;
+                return plugin;
+            })
+            func(plugins);
+        })
+    },
+    /**
+        * 
+        * @param {PluginMeta[]} plugins 
+        * @param {string} searchKey
+        * @param {string} tag
+        * @returns {pluginMeta[]}
+        */
+    search(plugins,searchKey,tag){
+        let search=searchKey.toLowerCase();
+        let n=(m)=>{
+            if(m.pluginName.toLowerCase().indexOf(search)>=0)return true;
+            if(m.author.toLowerCase().indexOf(search)>=0)return true;
+            if(m.desc.toLowerCase().indexOf(search)>=0)return true;
+            if((m.id+"").indexOf(search)>=0)return true;
+            if(search=="") return true;
+            return false
+        }
+        if(!searchKey)return plugins.filter(m=>(m.tags&&m.tags.includes(tag))||(tag=="all"));
+        return plugins.filter(m=>{
+            if(((m.tags&&m.tags.includes(tag))||(tag=="all"))&&n(m))return true;
+            return false;
+        })
+    },
+    /**
+        * 
+        * @param {pluginMeta} pluginMeta 
+        * @param {string} usid 
+        * @param {function(Fi):void} func 
+        */
+    download(pluginMeta,usid,func){
+        Http.get(this.rootURL+"/get?usid="+usid+"&id="+pluginMeta.id,r=>{
+            let fi=Manager.tempDir.child("temp"+Math.floor(Math.random()*10)+".acpl");
+            fi.writeBytes(r.getResult());
+            func(fi);
+        })
+    },
+    toString(){
+        return "[CIG]Potato"
+    },
+    GUID:"CIG-Potato"
+})

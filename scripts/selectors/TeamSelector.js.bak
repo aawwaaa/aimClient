@@ -1,0 +1,176 @@
+let defaultOptions={
+    onSelect:(team)=>{},
+    onCancel:()=>{},
+    // defaultSelect:null,
+}
+let Manager=require("Manager")
+
+
+function TeamSelector(window,options){
+    if(!window) throw new java.lang.NullPointerException();
+    if(!options) options={};
+    let opt=Object.assign({},defaultOptions,options);
+    let lastTitle=window.title;
+    window.setTitle((lastTitle.startsWith("@")?Core.bundle.get(lastTitle.substring(1)):lastTitle)+" - "+Core.bundle.get("selectTeam"));
+    let lastBody=window.body;
+    let lastStatusBar=window.statusBar;
+    let lastOnResize=window.onResize;
+    let lastOnHide=window.onHide;
+    let lastOnClose=window.onClose;
+    let lastOnShow=window.onShow;
+    let lastOnFullScreen=window.onFullScreen;
+
+    window.onResize=()=>{};
+    window.onHide=()=>{};
+    window.onClose=()=>{};
+    window.onShow=()=>{};
+    window.onFullScreen=()=>{};
+
+    let body=new Table();
+    let statusBar=new Table();
+
+    let team=opt.defaultTeam||null;
+
+    let e;
+    let im;
+
+    let buttons=[];
+    let buttonsT;
+    let buttonsTX;
+    let buttonsA=[];
+    let buttonsAT;
+
+    let pane=body.pane(cons(t=>{
+        let ta=new Table();
+        let img=(c)=>ta.image().color(c).get();
+        buttonsAT=t.table(cons(t=>{
+            for(let te of Team.baseTeams){
+                let tea=te;
+                let b=t.button(Core.atlas.drawable("aimclient-fill"),run(()=>{
+                    team=tea;
+                    e.get().setText(tea.id+"")
+                    im.clear();
+                    im.image().color(tea.color).size(16,16)
+                }));
+                b.get().replaceImage(img(te.color));
+                b.get().resizeImage(16);
+                b.get().add("[#"+te.color.toString()+"]"+te.name);
+                buttonsA.push(b);
+                if(te==Team.crux) t.row();
+            }
+        }));
+        t.row();
+        buttonsT=t.table(cons(t=>{
+            let w=Math.floor(window.width/32);
+            let p=0;
+            for(let i=6;i<256;i++){
+                let a=i;
+                let b=t.button(Core.atlas.drawable("aimclient-fill"),run(()=>{
+                    team=Team.get(a);
+                    e.get().setText(team.id+"")
+                    im.clear();
+                    im.image().color(Team.get(a).color).size(16,16)
+                })).size(32,32);
+                b.get().replaceImage(img(Team.get(a).color));
+                b.get().resizeImage(16);
+                buttons.push(b);
+                p++;
+                if(p%w==0) t.row();
+            }
+            buttonsTX=t
+        }))
+    }))
+
+    let n1=body.add("").get();
+
+    let t=statusBar.button(Core.atlas.drawable("aimclient-close"),run(()=>{
+        window.setTitle(lastTitle);
+        window.setBody(lastBody);
+        window.setStatusBar(lastStatusBar);
+        window.onResize=lastOnResize;
+        window.onHide=lastOnHide;
+        window.onClose=lastOnClose;
+        window.onShow=lastOnShow;
+        window.onFullScreen=lastOnFullScreen;
+        opt.onCancel()
+        window.flush();
+    })).size(96,32).get();
+    t.resizeImage(16)
+    t.add("@cancel").growX();
+
+    im=statusBar.table().size(32,32).get();
+
+    e=statusBar.field("",cons(a=>{try{
+        team=Team.get(a);
+        im.clear();
+        im.image().color(team.color).size(16,16)
+    }catch(_){}})).size(0,0);
+    e.get().setValidator(extend(TextField.TextFieldValidator,{
+        valid(text){
+            try{return Team.get(text)!=null;}catch(e){
+                return false;
+            }
+        }
+    }));
+
+    t=statusBar.button(Core.atlas.drawable("aimclient-ok"),run(()=>{
+        window.setTitle(lastTitle);
+        window.setBody(lastBody);
+        window.setStatusBar(lastStatusBar);
+        window.onResize=lastOnResize;
+        window.onHide=lastOnHide;
+        window.onClose=lastOnClose;
+        window.onShow=lastOnShow;
+        window.onFullScreen=lastOnFullScreen;
+        opt.onSelect(team);
+        window.flush();
+    })).size(96,32).get()
+    t.resizeImage(16);
+    t.add("@ok").growX();
+    let n2=statusBar.add("").size(0,0).get();
+
+
+    window.setBody(body);
+    window.setStatusBar(statusBar);
+    let ta=new Table();
+    let img=(c)=>ta.image().color(c).get();
+    window.onResize=(w,h)=>{
+        pane.size(w,h);
+        w-=32
+        buttonsAT.size(w,64);
+        buttonsA.forEach(b=>b.size(w/3,32));
+
+        // buttonsT.size(w,h-64);
+        buttonsT.get().clear();
+        let wx=Math.floor(w/32);
+        let p=0;
+        let t=buttonsTX;
+        t.clear();
+        for(let i=6;i<256;i++){
+            let a=i;
+            let b=t.button(Core.atlas.drawable("aimclient-fill"),run(()=>{
+                team=Team.get(a);
+                e.get().setText(team.id+"")
+                im.clear();
+                im.image().color(Team.get(a).color).size(16,16)
+            })).size(32,32);
+            b.get().replaceImage(img(Team.get(a).color));
+            b.get().resizeImage(16);
+            buttons.push(b);
+            p++;
+            if(p%wx==0) t.row();
+        }
+
+        let left=w-96*2-32;
+        e.size(left,32);
+
+
+        n1.setText("-");
+        n2.setText("-");
+        n1.setText("");
+        n2.setText("");
+    }
+    window.flush()
+
+}
+module.exports=TeamSelector;

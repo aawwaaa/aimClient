@@ -1,0 +1,161 @@
+#UTF-8 File
+#UTF-8 文件
+
+tools=Tools
+# tools
+schematics=Schematics
+world=World
+# world
+changeTeam=Change team
+spawn=Spawn
+units=Units
+fill=Fill
+rules=Rules
+teamdata=Team data
+# end world
+files=Files
+textEditor=Text editor
+imageViewer=Image viewer
+console=Console
+crashes=Crashes
+messageList=Message list
+# end tools
+
+admin=Admin
+# admin
+Aplayers=Players
+jsConsole=JavaScript console
+console=Console
+# end admin
+
+webServices=Web services
+# web
+mapBrowser=Map browser
+pluginBrowser=Plugin browser
+news=News
+chat=Chat
+resources=Resources
+# end web
+
+server=Server
+# server
+maps=Maps
+saves=Saves
+# end server
+
+windows=Windows
+settings=Settings
+pluginManage=Plugin manage
+sourcesManage=Sources manage
+style=Style
+plugin=Plugin
+about=About
+
+
+# selectors
+
+selectItem=Select item
+selectLiquid=Select liquid
+selectBlock=Select block
+selectUnit=Select unit
+selectTeam=Select team
+selectFile=Select file
+selectDirectory=Select directory
+
+saveFile=Save file
+loadFile=Load file
+
+multiSelect=(Multi-select)
+
+# dataTypes
+
+color=Color
+string=String
+number=Number
+boolean=Boolean
+team=Team
+seq=Sequence
+
+# windowTitles
+
+WmapBrowser=Map browser
+Wspawn=Spawn
+Wunits=Units
+WunitInfo=Unit info
+Wfill=Fill
+Wrules=Rules
+WchangeTeam=Change team
+Wteamdata=Team data
+Wfiles=Files
+WtextEditor=Text editor
+WimageViewer=Image viewer
+Wconsole=Console
+Wcrashes=Crashes
+Wfiles=files
+WpluginInfo=Plugin info
+WpluginManage=Plugin manage
+
+#text
+
+newFile=New file
+file=File
+directory=Directory
+rename=Rename
+saveAs=Save as
+unit=Unit
+amount=Amount
+block=Block
+rotation=Rotation
+floor=Floor
+overlay=Overlay
+if=if
+
+conn1=Data received.
+
+mapDownload=Map download
+mapDownloading=downloading...
+mapDownloadingFail=download fail:
+mapImporting=importing...
+mapImportFail=import fail:
+mapDownloadDone=download done.
+
+Mname=Name: 
+Mauthor=Author: 
+Mdesc=Description: 
+Mversion=Version: 
+MlastPackedTime=Last packed time:
+
+apply=Apply
+maybeRestart=Maybe you need restart your game to apply changes.
+
+info=Info
+
+import=Import
+importMapSource=Import source of map
+importPluginSource=Import source of plugin
+
+canNotImportDefaultSource=Can not import default sources,import those by yourself.
+
+setWeapon=Set weapon
+statusEffects=Status effects
+#tags 
+Tall=All
+Tstar=Star
+Ttrash=Trash
+TnonStandard=Non-Standard
+Tsurvival=Survival
+Tattack=Attack
+Tpvp=PVP
+Tsandbox=Sandbox
+Teditor=Editor
+TjsMap=JSMap
+
+Tcont=Content
+Tstyle=Style
+
+#marks
+mark-defend=Defend
+mark-attack=Attack
+mark-gather=Gather
+mark-what=What
+mark-mark=Mark

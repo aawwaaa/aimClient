@@ -1,0 +1,443 @@
+const Window = require("Window");
+const Manager = require("Manager");
+const Stys = require("Styles")
+
+function MapMeta(){
+    this.id=0;
+    this.name="";
+    this.mapName="";
+    this.author="";
+    this.desc="";
+    this.tags=[];
+}
+
+module.exports=(type,data)=>{
+
+    let window=new Window();
+    window.setTitle("@WmapBrowser");
+
+    /**
+     * [search                      ][Reload]
+     * [tags                                ]
+     * ======================================
+     * id mapName author           [Download]
+     * desc                        [Del][Upd]
+     * [tag][tag]
+     * ---------------------500px------------
+     * ===[usid                  ][Upload]===
+     * 
+     * child page:
+     *  sourceSelect
+     *  upload
+     *  update
+     */
+
+    let body=new Table();
+    let source={
+        tags:{
+            all:"@Tall",
+            star:"@Tstar",
+            trash:"@Ttrash",
+            nonstandard:"@TnonStandard",
+            survival:"@Tsurvival",
+            attack:"@Tattack",
+            pvp:"@Tpvp",
+            sandbox:"@Tsandbox",
+            editor:"@Teditor",
+            jsmap:"@TjsMap",
+        },
+        tagsConvert:{
+            survival:"tags-1",
+            attack:"tags-2",
+            pvp:"tags-3",
+            sandbox:"tags-4",
+            editor:"tags-8",
+            jsMap:"tags-11",
+            nonstandard:"tags-14",
+        },
+        rootURL:"http://mindustry.vicp.io:7002/api",
+        /**
+         * 
+         * @param {function(MapMeta[]):void} func 
+         */
+        list(func){
+            Http.get(this.rootURL+"/maps",r=>{
+                let str=new java.lang.String(r.getResult(),"utf-8");
+                let json=eval("("+str+")");
+                let maps=json.map(m=>{
+                    let map=new MapMeta();
+                    map.id=m.id;
+                    map.mapName=m.mapName.replace(/<a style="color:.*?">/g,(a)=>a.replace(">","").replace("<a style=\"color:",""));
+                    map.author=m.author;
+                    map.desc=m.desc;
+                    map.tags=m.tags;
+                    return map;
+                })
+                func(maps);
+            })
+        },
+        /**
+         * 
+         * @param {MapMeta[]} maps 
+         * @param {string} searchKey
+         * @param {string} tag
+         * @returns {MapMeta[]}
+         */
+        search(maps,searchKey,tag){
+            let search=searchKey.toLowerCase();
+            let n=(m)=>{
+                if(m.mapName.toLowerCase().indexOf(search)>=0)return true;
+                if(m.author.toLowerCase().indexOf(search)>=0)return true;
+                if(m.desc.toLowerCase().indexOf(search)>=0)return true;
+                if((m.id+"").indexOf(search)>=0)return true;
+                if(search=="") return true;
+                return false
+            }
+            if(!searchKey)return maps.filter(m=>(m.tags&&m.tags.includes(tag))||(tag=="all"));
+            return maps.filter(m=>{
+                if(((m.tags&&m.tags.includes(tag))||(tag=="all"))&&n(m))return true;
+                return false;
+            })
+        },
+        // /**
+        //  * 
+        //  * @param {MapMeta} mapMeta 
+        //  * @param {Fi} fi 
+        //  * @param {string} usid 
+        //  * @param {function(string):void} func
+        //  */
+        // upload(mapMeta,fi,usid,func){
+        //     let OutputStreamWriter=java.io.OutputStreamWriter;
+        //     let URL=java.net.URL;
+        //     //using multipart/type-data POST
+
+        //     let sb=new java.util.StringBuffer();
+        //     let sendUrl=new URL(new java.lang.String(this.rootURL+"/upload").twim())
+        //     let conn=sendUrl.openConnection();
+        //     conn.setDoOutput(true);
+        //     let rand=new java.lang.String(Math.random()+"").replace(".","");
+        //     let boundary=new java.lang.String("---------------------------"+rand);
+        //     let o=new OutputStreamWriter(conn.getOutputStream());
+        //     var out={
+        //         sb:new java.util.StringBuilder(),
+        //         write(str){
+        //             this.sb.append(str);
+        //         },
+        //         out(){
+        //             o.write(this.sb.toString());
+        //         }
+        //     }
+        //     mapMeta.usid=usid;
+        //     for(let key in mapMeta){
+        //         if(key=="id") continue;
+        //         if(key=="tags") continue;
+        //         out.write("--"+boundary+"\r\n");
+        //         out.write("Content-Disposition: form-data; mapName=\""+key+"\"\r\n\r\n");
+        //         out.write(encodeURIComponent(mapMeta[key])+"\r\n");
+        //     }
+        //     delete mapMeta.usid;
+        //     for(let tag of mapMeta.tags){
+        //         out.write("--"+boundary+"\r\n");
+        //         out.write("Content-Disposition: form-data; mapName=\""+this.tagsConvert[tag]+"\"\r\n\r\n");
+        //         out.write(encodeURIComponent(true)+"\r\n");
+        //     }
+        //     out.write("--"+boundary+"\r\n");
+        //     out.write("Content-Disposition: form-data; mapName=\"file\"; filename=\""+fi.getName()+"\"\r\n");
+        //     out.write("Content-Type: application/octet-stream\r\n\r\n");
+        //     conn.setRequestProperty("Content-Type","multipart/form-data; boundary="+boundary);
+        //     conn.setRequestProperty("Content-Length",String(out.sb.length()+fi.size()));
+        //     out.out();
+        //     out.write(fi.readBytes());
+        //     out.write("\r\n--"+boundary+"--\r\n");
+
+        //     o.flush();
+        //     o.close();
+        //     let r=new java.lang.String(conn.getInputStream().readBytes(),"utf-8");
+        //     func(r)
+        // },
+        // /**
+        //  * 
+        //  * @param {MapMeta} mapMeta 
+        //  * @param {string} usid 
+        //  * @param {function(string):void} func
+        //  */
+        // delete(mapMeta,usid,func){
+        //     Http.get(this.rootURL+"/delete?usid="+usid+"&id="+mapMeta.id,r=>{
+        //         let str=new java.lang.String(r.getResult(),"utf-8");
+        //         func(str);
+        //     })
+        // },
+        // /**
+        //  * 
+        //  * @param {MapMeta} mapMeta 
+        //  * @param {string} usid 
+        //  * @param {function(string):void} func 
+        //  * @param {Fi?} fi
+        //  */
+        // update(mapMeta,usid,func,fi){
+        //     let OutputStreamWriter=java.io.OutputStreamWriter;
+        //     let URL=java.net.URL;
+        //     //using multipart/type-data POST
+
+        //     let sb=new java.util.StringBuffer();
+        //     let sendUrl=new URL(new java.lang.String(this.rootURL+"/upload").twim())
+        //     let conn=sendUrl.openConnection();
+        //     conn.setDoOutput(true);
+        //     let rand=new java.lang.String(Math.random()+"").replace(".","");
+        //     let boundary=new java.lang.String("---------------------------"+rand);
+        //     let o=new OutputStreamWriter(conn.getOutputStream());
+        //     var out={
+        //         sb:new java.util.StringBuilder(),
+        //         write(str){
+        //             this.sb.append(str);
+        //         },
+        //         out(){
+        //             o.write(this.sb.toString());
+        //         }
+        //     }
+        //     mapMeta.usid=usid;
+        //     for(let key in mapMeta){
+        //         if(key=="id") continue;
+        //         if(key=="tags") continue;
+        //         out.write("--"+boundary+"\r\n");
+        //         out.write("Content-Disposition: form-data; mapName=\""+key+"\"\r\n\r\n");
+        //         out.write(encodeURIComponent(mapMeta[key])+"\r\n");
+        //     }
+        //     delete mapMeta.usid;
+        //     for(let tag of mapMeta.tags){
+        //         out.write("--"+boundary+"\r\n");
+        //         out.write("Content-Disposition: form-data; mapName=\""+this.tagsConvert[tag]+"\"\r\n\r\n");
+        //         out.write(encodeURIComponent(true)+"\r\n");
+        //     }
+        //     if(){
+        //         out.write("--"+boundary+"\r\n");
+        //         out.write("Content-Disposition: form-data; mapName=\"file\"; filename=\""+fi.getName()+"\"\r\n");
+        //         out.write("Content-Type: application/octet-stream\r\n\r\n");
+        //     }
+        //     conn.setRequestProperty("Content-Type","multipart/form-data; boundary="+boundary);
+        //     conn.setRequestProperty("Content-Length",String(out.sb.length()+fi.size()));
+        //     out.out();
+        //     out.write(fi.readBytes());
+        //     out.write("\r\n--"+boundary+"--\r\n");
+
+        //     o.flush();
+        //     o.close();
+        //     let r=new java.lang.String(conn.getInputStream().readBytes(),"utf-8");
+        //     func(r)
+        // },
+        /**
+         * 
+         * @param {MapMeta} mapMeta 
+         * @param {string} usid 
+         * @param {function(Fi):void} func 
+         */
+        download(mapMeta,usid,func){
+            Http.get(this.rootURL+"/getInfo?usid="+usid+"&id="+mapMeta.id,r=>{
+                let str=new java.lang.String(r.getResult(),"utf-8");
+                let json=eval("("+str+")");
+                Http.get(this.rootURL+"/download?name="+encodeURIComponent(json.name),r=>{
+                    let fi=Vars.dataDirectory.child("temp"+Math.floor(Math.random()*10)+".msav");
+                    fi.writeBytes(r.getResult());
+                    func(fi);
+                })
+            })
+        }
+    }
+    let draw;
+    let maps=[];
+    let flush=()=>{
+        for(let k in source.tags){
+            source.tags[k]=source.tags[k].startsWith("@")?Core.bundle.get(source.tags[k].substring(1)):source.tags[k]
+        }
+        source.list(m=>{
+            maps=m
+            Core.app.post(()=>{
+                draw(window.getW())
+            })
+        })
+    }
+    let search;
+    let ta=[]
+    let tagsT;
+    let currTag="all"
+    let usid="";
+    let page;
+    let pageL;
+    let amount;
+    let top=body.table(cons(t=>{
+        ta.push(t.table(cons(t=>{
+            search=t.field("",cons(a=>{
+                draw(window.getW())
+            }))
+            t.button(Core.atlas.drawable("aimclient-reload"),Stys.di,run(()=>{
+                flush()
+            })).size(32,32).get().resizeImage(16);
+        })))
+        t.row()
+        ta.push(t.table(cons(t=>{t.add("a")})))
+        t.row()
+        ta.push(t.table(cons(t=>{
+            t.button(Core.atlas.drawable("aimclient-back"),Stys.di,run(()=>{
+                page.get().setText(page.get().getText()-1+"")
+                if(page.get().getText()<0) page.get().setText(0+"")
+                draw(window.getW())
+            })).size(32,32).get().resizeImage(16);
+            page=t.field("0",cons(a=>{
+                draw(window.getW())
+            }))
+            pageL=t.label(prov(x=>{return "/"+Math.floor(amount/30)}))
+            t.button(Core.atlas.drawable("aimclient-next"),Stys.di,run(()=>{
+                page.get().setText(+page.get().getText()+1+"")
+                if(page.get().getText()>amount/30) page.get().setText(Math.floor(amount/30)+"")
+                draw(window.getW())
+            })).size(32,32).get().resizeImage(16);
+        })))
+    }))
+    body.row()
+    let pane=body.pane(cons(t=>{
+        draw=(w)=>{
+            ta[1].get().clear()
+            let l=0;
+            for(let _ in source.tags){l++}
+            for(let tag in source.tags){
+                let t=tag
+                ta[1].get().button(source.tags[tag],Stys.dt,run(()=>{
+                    currTag=t
+                    draw(window.getW())
+                })).size(Math.floor(w/l),32).get().setDisabled(currTag==tag)
+            }
+            
+            t.clear();
+            let width=Math.ceil(w/500)-1;
+            if(width==0) width=1
+            let wid=width*500;
+            let ww=wid/width;
+            let id=0;
+            let ly=[];
+            let ts=[]
+            for(let i=0;i<width;i++){
+                ly[i]=0;
+                ts[i]=t.table().width(ww).get();
+            }
+            amount=source.search(maps,search.get().getText(),currTag).length
+            let p=+page.get().getText()
+            for(let map of source.search(maps,search.get().getText(),currTag).slice(p*30,p*30+30)){
+                let y=Math.floor(id/width);
+                let x=id%width;
+                y*=32;
+                if(y!=ly[x]){
+                    ly[x]=y;
+                    ts[x].row();
+                }
+                ts[x].table(Stys.button,cons(t=>{
+                    /**
+                     * ===============================
+                     * id       name        [download]
+                     * author   [tags]
+                     * desc
+                     * ===============================
+                     */
+                    let ma=map
+                    t.table(cons(t=>{
+                        t.label(prov(()=>"[gray]"+ma.id)).size(ww-32,32).left()
+                        t.button(Core.atlas.drawable("aimclient-download"),Stys.di,run(()=>{
+                            let statStr="@mapDownloading"
+                            let hasErr=false
+                            let canceled=false
+                            let w=new Window()
+                            w.setTitle("@mapDownload")
+                            let b=new Table();
+                            b.add(ma.mapName).row()
+                            b.label(prov(()=>statStr)).size(500,32).row()
+                            let areaa=b.area("",cons(a=>{})).size(500,0).touchable(Touchable.disabled)
+                            let area=areaa.get()
+                            area.visibility=boolp(()=>hasErr)
+                            b.row()
+                            let button=b.button("@cancel",run(()=>{
+                                canceled=true
+                                w.close()
+                            })).size(500,32).get()
+                            w.setBody(b)
+                            w.setSize(500,80)
+                            w.setResizable(false)
+                            w.center()
+                            w.show()
+                            w.onClose=()=>canceled=true
+                            try{
+                                source.download(ma,usid,fi=>{
+                                    if(canceled) return;
+                                    try{
+                                        statStr="@mapImporting"
+                                        Vars.maps.importMap(fi);
+                                        statStr="@mapDownloadDone"
+                                        button.setText("@ok")
+                                    }catch(e){
+                                        statStr="@mapImportFail"
+                                        hasErr=true
+                                        w.setSize(500,400)
+                                        area.setText(e+"")
+                                        button.setText("@ok")
+                                        areaa.size(500,320)
+                                    }
+                                })
+                            }catch(e){
+                                statStr="@mapDownloadFail"
+                                hasErr=true
+                                w.setSize(500,400)
+                                area.setText(e+"")
+                                button.setText("@ok")
+                                areaa.size(500,320)
+                            }
+                        })).size(32,32).get().resizeImage(16);
+                    })).size(ww,32)
+                    t.row()
+                    t.label(prov(()=>ma.mapName)).size(ww,32).get().setWrap(true)
+                    t.row()
+                    t.label(prov(()=>Core.bundle.get("Mauthor")+ma.author)).size(ww,32).get().setWrap(true)
+                    t.row()
+                    t.table(cons(t=>{
+                        let wi=ww;
+                        if(map.tags==null) map.tags=[]
+                        let str=""
+                        for(let tag of map.tags){
+                        str+="["+source.tags[tag]+"]"
+                            wi-=wi/map.tags.length;
+                        }
+                        t.add(str).size(wi,32)
+                    })).size(ww,32).row()
+                    t.label(prov(()=>ma.desc)).width(ww).get().setWrap(true)
+                    t.row()
+                    //t.image().color(Color.gray).width(ww).height(2)
+                    //t.row()
+                    t.add("[white]").size(0,0)
+
+                })).width(ww).row()
+            }
+        }
+    }))
+    
+    let statusBar=new Table();
+
+    let aa=body.add("").get();
+    let ab=statusBar.add("").get();
+    window.onResize=(w,h)=>{
+        draw(w)
+        top.size(w,32*3)
+        ta.forEach(t=>t.size(w,32))
+        search.size(w-32,32)
+        page.size((w-64)*0.45,32)
+        pageL.size((w-64)*0.55,32)
+        pane.size(w,h-32*3)
+        aa.setText("-")
+        ab.setText("-")
+        aa.setText("")
+        ab.setText("")
+    }
+
+    window.setBody(body);
+    window.setStatusBar(statusBar);
+    window.setSize(600,400)
+    window.center();
+    window.show();
+    flush()
+}

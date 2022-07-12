@@ -1,0 +1,89 @@
+({
+    tags:{
+        all:"@Tall",
+        star:"@Tstar",
+        trash:"@Ttrash",
+        nonstandard:"@TnonStandard",
+        survival:"@Tsurvival",
+        attack:"@Tattack",
+        pvp:"@Tpvp",
+        sandbox:"@Tsandbox",
+        editor:"@Teditor",
+        jsmap:"@TjsMap",
+    },
+    tagsConvert:{
+        survival:"tags-1",
+        attack:"tags-2",
+        pvp:"tags-3",
+        sandbox:"tags-4",
+        editor:"tags-8",
+        jsMap:"tags-11",
+        nonstandard:"tags-14",
+    },
+    rootURL:"http://mindustry.vicp.io:7002/api",
+    /**
+     * 
+     * @param {function(MapMeta[]):void} func 
+     */
+    list(func){
+        Http.get(this.rootURL+"/maps",r=>{
+            let str=new java.lang.String(r.getResult(),"utf-8");
+            let json=eval("("+str+")");
+            let maps=json.map(m=>{
+                let map=new MapMeta();
+                map.id=m.id;
+                map.name=m.name
+                map.mapName=m.mapName?m.mapName.replace(/<a style="color:.*?">/g,(a)=>a.replace(">","").replace("<a style=\"color:","")):m.name;
+                map.author=m.author;
+                map.desc=m.desc;
+                map.tags=m.tags;
+                return map;
+            })
+            func(maps);
+        })
+    },
+    /**
+     * 
+     * @param {MapMeta[]} maps 
+     * @param {string} searchKey
+     * @param {string} tag
+     * @returns {MapMeta[]}
+     */
+    search(maps,searchKey,tag){
+        let search=searchKey.toLowerCase();
+        let n=(m)=>{
+            if(m.mapName.toLowerCase().indexOf(search)>=0)return true;
+            if(m.author.toLowerCase().indexOf(search)>=0)return true;
+            if(m.desc.toLowerCase().indexOf(search)>=0)return true;
+            if((m.id+"").indexOf(search)>=0)return true;
+            if(search=="") return true;
+            return false
+        }
+        if(!searchKey)return maps.filter(m=>(m.tags&&m.tags.includes(tag))||(tag=="all"));
+        return maps.filter(m=>{
+            if(((m.tags&&m.tags.includes(tag))||(tag=="all"))&&n(m))return true;
+            return false;
+        })
+    },
+    /**
+     * 
+     * @param {MapMeta} mapMeta 
+     * @param {string} usid 
+     * @param {function(Fi):void} func 
+     */
+    download(mapMeta,usid,func){
+        Http.get(this.rootURL+"/getInfo?usid="+usid+"&id="+mapMeta.id,r=>{
+            let str=new java.lang.String(r.getResult(),"utf-8");
+            let json=eval("("+str+")");
+            Http.get(this.rootURL+"/download?name="+encodeURIComponent(json.name),r=>{
+                let fi=Manager.tempDir.child("temp"+Math.floor(Math.random()*10)+".msav");
+                fi.writeBytes(r.getResult());
+                func(fi);
+            })
+        })
+    },
+    toString(){
+        return "[CIG]Potato"
+    },
+    GUID:"CIG-Potato"
+})
