@@ -560,7 +560,7 @@ let exports={
         Manager.styles.registerStyle("mindustry",{
             defaulti:Styles.defaulti,
             defaultt:Styles.defaultt,
-            togglei:Styles.emptytogglei,
+            togglei:Styles.clearTogglei,
             togglet:Styles.togglet,
 
             button:Tex.button,

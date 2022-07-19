@@ -46,7 +46,7 @@ var obj={
            })
        })).size(48).get().resizeImage(32)
        l1=table.add("").size(0).get()
-        })).width(48*5).height(0).left().top().minWidth(48*5).padLeft(48*0.22)
+        })).width(48*5).height(0).left().top().minWidth(48*5).padLeft(48*0.23)
         MainWindow.table.row()
         tc.get().visibility=boolp(()=>b.isChecked()&&MainWindow.s)
        MainWindow.moveY.push(()=>b.isChecked()&&MainWindow.s?-24:0)
@@ -54,7 +54,14 @@ var obj={
            tc.height(b.isChecked()&&MainWindow.s?48:0)
            l1.setText("-")
            l1.setText("")
+           Core.settings.put("marks-show",b.isChecked()?"1":"0")
        }
+       l1.setText("-")
+       l1.setText("")
+       Timer.schedule(()=>{
+        b.setChecked(Core.settings.get("marks-show","1")=="1")
+        tc.height(b.isChecked()&&MainWindow.s?48:0)
+    },1)
     },
     marks:[],
     markIcons:{}

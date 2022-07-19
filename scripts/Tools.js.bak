@@ -2,6 +2,7 @@ let console=require("tools/Console")
 let files=require("tools/Files")
 let textEditor=require("tools/TextEditor")
 let testWindow=require("tools/TestWindow")
+let messageList=require("tools/MessageList")
 
 let world=require("tools/World")
 module.exports=(MainWindow,childs,Manager)=>{
@@ -40,6 +41,14 @@ module.exports=(MainWindow,childs,Manager)=>{
             hasChild:false,
             run:()=>{
                 console();
+            }
+        },
+        messageList:{
+            name:"@messageList",
+            icon:Core.atlas.drawable("aimclient-messageList"),
+            hasChild:false,
+            run:()=>{
+                messageList();
             }
         }
     })

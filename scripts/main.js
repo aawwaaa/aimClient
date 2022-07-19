@@ -33,7 +33,9 @@ let funcs=[
     require("Server"),
     require("Settings"),
     require("About"),
-    require("connect/Votes")
+    require("ai/m"),
+    require("frags/m"),
+    require("connect/Votes"),
 ]
 let f=require("DefaultInfoT");
 const { events } = require("Manager");
@@ -99,6 +101,7 @@ let load=()=>{
 
 
 Events.on(ClientLoadEvent,()=>{
+    /*
     if(Version.build<135||Version.build>2000){
         let dialog=new Dialog("[yellow]<!>Warning<!>");
         dialog.cont.pane(cons(t=>{
@@ -117,6 +120,7 @@ Events.on(ClientLoadEvent,()=>{
         dialog.show();
         return;
     }
+    */
     load();
 })
 

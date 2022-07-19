@@ -5,6 +5,7 @@ let testWindow=require("tools/TestWindow")
 let messageList=require("tools/MessageList")
 
 let world=require("tools/World")
+let Stys=require("Styles")
 module.exports=(MainWindow,childs,Manager)=>{
     childs.tools={
         name:"@tools",
@@ -52,4 +53,7 @@ module.exports=(MainWindow,childs,Manager)=>{
             }
         }
     })
+    MainWindow.bottomButtons.button(Core.atlas.drawable("aimclient-messageList"),Stys.di,run(()=>{
+        messageList();
+    })).size(48).get().resizeImage(16)
 }

@@ -518,6 +518,26 @@ let exports={
         // for (let key in Manager) {
         //     print(key)
         // }
+        
+        Manager.styles.registerStyle("forest",{
+            defaulti:i,
+            defaultt:t,
+            togglei:is,
+            togglet:ts,
+
+            button:buttonTexDrawable,
+            buttonNoBackground:buttonUpDrawable,
+
+            //TODO
+            textField:tf,
+            area:ta,
+            check:cb,
+            slider:sl,
+            bar:acBar,
+
+            themeColor:Color.acid
+        })
+        
         Manager.styles.registerStyle("aimclient",{
             defaulti:i,
             defaultt:t,
@@ -540,8 +560,8 @@ let exports={
         Manager.styles.registerStyle("mindustry",{
             defaulti:Styles.defaulti,
             defaultt:Styles.defaultt,
-            togglei:Styles.emptytogglei,
-            togglet:Styles.togglet,
+            togglei:Styles.clearTogglei,
+            togglet:Styles.clearTogglet,
 
             button:Tex.button,
             buttonNoBackground:Tex.button,

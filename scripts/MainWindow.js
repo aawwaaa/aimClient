@@ -92,13 +92,13 @@ module.exports={
             t.table(Stys.button,cons(t=>{
                 t.pane(cons(t=>{
                     t.add(that.menuT).width(48*3+24*1);
-                })).size(48*3+24,7*24).get().setStyle(Styles.nonePane);
+                })).size(48*3+24,7*24).get().setStyle(Styles.smallPane);
                 t.row()
                 t.add(that.bottomButtons).width(48*3+24).height(48).left()
                 that.bottomButtons.setBackground(Stys.buttonNoBackground)
             })).size(48*3+24,7*24+48);
             t.table(cons(t=>{
-              t.table().height(14).row()
+              t.table().height(22).row()
               that.info=t.table(Stys.button,cons(t=>{
                 t.table(Stys.buttonNoBackground,cons(t=>{
                     t.label(prov(()=>Manager.connected&&that.infoCanClose==false?Manager.connectData.version:that.infoTitle)).growX().left();
