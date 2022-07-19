@@ -23,8 +23,8 @@ function PluginMeta(){
 module.exports={
     load:false,
 
-    version:"1.0.7",
-    versionType:"c",
+    version:"1.0.8",
+    versionType:"AWA",
     /**
      * c:public
      * d:protected

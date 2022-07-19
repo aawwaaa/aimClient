@@ -24,7 +24,7 @@ module.exports={
     load:false,
 
     version:"1.0.8",
-    versionType:"AWA",
+    versionType:"c",
     /**
      * c:public
      * d:protected
