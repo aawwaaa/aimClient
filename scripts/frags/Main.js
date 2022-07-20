@@ -11,7 +11,7 @@ module.exports.init=function(MainWindow,childs,Manager){
             table.clear()
             ty=0
             module.exports.datas.forEach(a=>{
-                if(Core.settings.get("frags-disabled-"+a.name,"0")=="1") return
+                if(Core.settings.get("frag-disabled-"+a.name,"0")=="1") return
                 if(a.valid(tile)){
                     let cell=table.table().width(48*6).left()
                     let res=a.add(cell.get(),tile)
@@ -26,9 +26,12 @@ module.exports.init=function(MainWindow,childs,Manager){
     })).width(48*6).height(0).left().top().marginLeft(0).padLeft(48*0.23).touchable(Touchable.disabled)
     MainWindow.table.row()
     tc.get().visibility=boolp(()=>Core.settings.get("frag-show","1")=="1"&&MainWindow.s)
-    MainWindow.moveY.push(()=>Core.settings.get("frag-show","1")=="1"&&MainWindow.s?-Math.ceil(ty/2):0)
+    MainWindow.moveY.push(()=>{
+        tc.height(Core.settings.get("frag-show","1")=="1"&&MainWindow.s?ty:0)
+        return Core.settings.get("frag-show","1")=="1"&&MainWindow.s?-Math.ceil(ty/2):0
+    })
     tc.get().update(run(()=>{
-        tc.height(ty)
+        tc.height(Core.settings.get("frag-show","1")=="1"&&MainWindow.s?ty:0)
         l1.setText("-")
         l1.setText("")
     }))

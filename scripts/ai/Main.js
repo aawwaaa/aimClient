@@ -17,7 +17,10 @@ module.exports.init=function(MainWindow,childs,Manager){
     })).height(0).left().top().marginLeft(0).padLeft(48*0.23)
     MainWindow.table.row()
     tc.get().visibility=boolp(()=>b.isChecked()&&MainWindow.s)
-    MainWindow.moveY.push(()=>b.isChecked()&&MainWindow.s?-24:0)
+    MainWindow.moveY.push(()=>{
+        tc.height(b.isChecked()&&MainWindow.s?48:0)
+        return b.isChecked()&&MainWindow.s?-24:0
+    })
     ru=()=>{
         tc.height(b.isChecked()&&MainWindow.s?48:0)
         l1.setText("-")
