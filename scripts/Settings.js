@@ -1,6 +1,7 @@
 let style=require("settings/Style")
 let pluginManage=require("settings/PluginManage")
 let sourcesManage=require("settings/SourcesManage")
+let fragSettings=require("settings/Frag")
 
 module.exports=(MainWindow,childs,Manager)=>{
     childs.settings={
@@ -32,6 +33,14 @@ module.exports=(MainWindow,childs,Manager)=>{
             hasChild:false,
             run:()=>{
                 sourcesManage();
+            }
+        },
+        fragSettings:{
+            name:"@frag-settings",
+            icon:Core.atlas.drawable("aimclient-frag"),
+            hasChild:false,
+            run:()=>{
+                fragSettings();
             }
         },
     })

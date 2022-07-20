@@ -436,7 +436,7 @@ function acBar(n,c,r){
 
             font.setColor(1,1,1,1)
             font.getCache().clear()
-            font.getCache().addText(n,x+w/2/*-lay.width/2*/,y+h/2/*+lay.height/2+1*/)
+            font.getCache().addText(n,x+w/4+lay.width/2,y+h-lay.height/2+1)
             font.getCache().draw(1)
 
             Pools.free(lay)

@@ -42,13 +42,13 @@ function PositionT(options){
             if(Date.now()>t){
                 dspX=Core.input.mouseX();
                 dspY=Core.input.mouseY();
-                worldX=Math.floor(Core.input.mouseWorldX());
-                worldY=Math.floor(Core.input.mouseWorldY());
+                worldX=Math.round(Core.input.mouseWorldX());
+                worldY=Math.round(Core.input.mouseWorldY());
                 if(!opt.unitGrid){
                     worldX/=8
-                    worldX=Math.floor(worldX)
+                    worldX=Math.round(worldX)
                     worldY/=8
-                    worldY=Math.floor(worldY)
+                    worldY=Math.round(worldY)
                 }
             }
         }else{

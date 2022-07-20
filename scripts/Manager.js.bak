@@ -23,7 +23,7 @@ function PluginMeta(){
 module.exports={
     load:false,
 
-    version:"1.0.8",
+    version:"1.0.9",
     versionType:"AWA",
     /**
      * c:public
@@ -427,7 +427,7 @@ module.exports={
         dir:null,
         init(){
             if(Core.settings.get("ac-defaultSourceAdded","false")=="false"){
-                let fi=Vars.mods.getMod("aimclient").file
+                let fi=Vars.mods.getMod("aimclient").root
                 if(!fi.child("assets").exists()) fi=fi.child("aimClient")
                 fi=fi.child("assets").child("sources")
                 if(fi.exists()){

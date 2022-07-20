@@ -90,6 +90,7 @@ Wconsole=控制台
 Wcrashes=崩溃
 WpluginManage=插件管理
 WpluginInfo=插件信息
+WmessageList=消息列表
 
 
 #text
@@ -157,3 +158,17 @@ mark-attack=进攻
 mark-gather=集合
 mark-what=????
 mark-mark=标记
+
+#frags
+frag-enabled=启用悬浮窗
+frag-position=坐标
+frag-block=方块
+frag-floor=地板
+frag-overlay=覆盖层
+frag-health=生命值
+frag-team=队伍
+frag-config=配置
+frag-powerGraph=电网
+frag-powerGraph-IO=电网输入/输出
+frag-powerGraph-battery=电网电池
+frag-progress=进度
