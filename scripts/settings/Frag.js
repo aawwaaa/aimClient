@@ -18,13 +18,22 @@ module.exports=(type,data)=>{
     window.setTitle("@frag-settings");
 
     let body=new Table();
-    let top=body.check("@frag-enabled",new Boolc(){
-        get(e){
-            Core.settings.put("frag-show",e?"1":"0")
-        }
-    })
-    top.get().setChecked(Core.settings.get("frag-show","1")=="1")
-    top.get().setStyle(Stys.check)
+    let top=body.table(cons(t=>{
+        let c=t.check("@broad-enabled",new Boolc(){
+            get(e){
+                Core.settings.put("frag-show-table",e?"1":"0")
+            }
+        }).width(160).get()
+        c.setChecked(Core.settings.get("frag-show-table","1")=="1")
+        c.setStyle(Stys.check)
+        c=t.check("@frag-enabled",new Boolc(){
+            get(e){
+                Core.settings.put("frag-show",e?"1":"0")
+            }
+        }).width(160).get()
+        c.setChecked(Core.settings.get("frag-show","1")=="1")
+        c.setStyle(Stys.check)
+    }))
     body.row()
     let draw
     let pane=body.pane(cons(t=>{
@@ -50,7 +59,8 @@ module.exports=(type,data)=>{
                 }).size(ww,32).get()
                 a.setChecked(Core.settings.get("frag-disabled-"+n,"0")==0)
                 a.image(data.icon).size(16)
-                a.add(data.name).growX()
+                a.add(data.name).size(ww-128,16)
+                a.add(data.atTable?"@broad-at":"").size(80,16)
                 a.setStyle(Stys.check)
                 id++
             }

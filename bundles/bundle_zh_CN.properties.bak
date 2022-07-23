@@ -159,9 +159,18 @@ mark-gather=集合
 mark-what=????
 mark-mark=标记
 
+#broads
+broad-enabled=启用侧边栏
+broad-self-health=自身生命
+broad-self-shield=自身护盾
+
 #frags
+frag-settings=悬浮窗设置
 frag-enabled=启用悬浮窗
 frag-position=坐标
+frag-unit-type=单位类型
+frag-unit-health=单位生命
+frag-unit-shield=单位护盾
 frag-block=方块
 frag-floor=地板
 frag-overlay=覆盖层
@@ -172,3 +181,5 @@ frag-powerGraph=电网
 frag-powerGraph-IO=电网输入/输出
 frag-powerGraph-battery=电网电池
 frag-progress=进度
+frag-items=物品
+frag-liquids=液体

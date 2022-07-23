@@ -54,10 +54,12 @@ let c=new (require("ai/Main").Controller)(
                     showed=true
                     new Pos1({
                         onSelect:(x,y)=>{
+                            try{
                             path=new Seq()
                             pathIndex=0
                             Astar.pathfind(unit.tileX(),unit.tileY(),x,y,unit.type.flying?FLYING:module.exports.tileHueristics[unit.pathType()],boolf(tile=>unit.type.flying||module.exports.tilePossibles[unit.pathType()](tile))).each(a=>path.add(a))
                             pathfinded=true
+                            }catch(e){}
                         },
                         unitGrid:false
                     })

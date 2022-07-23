@@ -6,11 +6,11 @@ function chooseItem(unit){
     let min=Infinity
     let tier=unit.type.mineTier
     let item=Items.copper
-    if(tier>=0&&getItemAmount(Items.copper)<min&&Vars.indexer.hasOre(Items.copper)){
+    if(tier>=1&&getItemAmount(Items.copper)<min&&Vars.indexer.hasOre(Items.copper)){
         min=getItemAmount(Items.copper)
         item=Items.copper
     }
-    if(tier>=0&&getItemAmount(Items.lead)<min&&Vars.indexer.hasOre(Items.lead)){
+    if(tier>=1&&getItemAmount(Items.lead)<min&&Vars.indexer.hasOre(Items.lead)){
         min=getItemAmount(Items.lead)
         item=Items.lead
     }
@@ -18,11 +18,11 @@ function chooseItem(unit){
         min=getItemAmount(Items.titanium)
         item=Items.titanium
     }
-    if(tier>=0&&getItemAmount(Items.beryllium)<min&&Vars.indexer.hasOre(Items.beryllium)){
+    if(tier>=3&&getItemAmount(Items.beryllium)<min&&Vars.indexer.hasOre(Items.beryllium)){
         min=getItemAmount(Items.beryllium)
         item=Items.beryllium
     }
-    if(tier>=0&&getItemAmount(Items.graphite)<min&&Vars.indexer.hasOre(Items.graphite)){
+    if(tier>=Infinity&&getItemAmount(Items.graphite)<min&&Vars.indexer.hasOre(Items.graphite)){
         min=getItemAmount(Items.graphite)
         item=Items.graphite
     }

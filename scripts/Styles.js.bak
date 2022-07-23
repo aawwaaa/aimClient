@@ -408,7 +408,7 @@ function acBar(n,c,r){
             Draw.color(c)
             Draw.rect(rect,x+mx/2,y+(h-2)/2,mx,(h-12))
 
-            let font=Fonts.def;
+            let font=Fonts.outline;
             let lay=Pools.obtain(GlyphLayout,function(){
                 let a1=arguments[0]
                 let a2=arguments[1]
@@ -430,13 +430,14 @@ function acBar(n,c,r){
                     case 9:
                         return new GlyphLayout(a1,a2,a3,a4,a5,a6,a7,a8,a9)
                     default:
+                        print(arguments.length)
                         return new GlyphLayout()
                 }
             })
 
             font.setColor(1,1,1,1)
             font.getCache().clear()
-            font.getCache().addText(n,x+w/2+lay.width/2,y+h/2-lay.height/2+1)
+            font.getCache().addText(n, this.x + this.width / 2 - lay.width / 2, this.y + this.height / 2 + lay.height / 2 + 1)
             font.getCache().draw(1)
 
             Pools.free(lay)

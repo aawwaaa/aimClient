@@ -162,9 +162,18 @@ mark-gather=Gather
 mark-what=What
 mark-mark=Mark
 
+#broads
+broad-enabled=Broad enabled
+broad-self-health=Self health
+broad-self-shield=Self shield
+
 #frags
+frag-settings=Frag settings
 frag-enabled=Fragment enabled
 frag-position=Position
+frag-unit-type=Unit type
+frag-unit-health=Unit health
+frag-unit-shield=Unit shield
 frag-block=Block
 frag-floor=Floor
 frag-overlay=Overlay
@@ -175,3 +184,5 @@ frag-powerGraph=Power graph
 frag-powerGraph-IO=Power graph input/output
 frag-powerGraph-battery=Power graph batteries
 frag-progress=Progress
+frag-items=Items
+frag-liquids=Liquids

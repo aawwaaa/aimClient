@@ -11,7 +11,7 @@ exports.init=()=>{
                     if(!(tile.build&&tile.build.power&&tile.build.power.graph)) return "N/A"
                     let graph=tile.build.power.graph
                     let io=graph.getLastPowerProduced()-graph.getLastPowerNeeded()
-                    io*=60
+                    io*=10
                     io=Math.floor(io)
                     if(io>0) io="+"+io
                     return io+""
@@ -48,12 +48,12 @@ exports.init=()=>{
             table.label(prov(()=>{
                 if(!(tile.build&&tile.build.power&&tile.build.power.graph)) return "[green]+P"
                 let graph=tile.build.power.graph
-                return "[green]+"+Math.floor(graph.getLastPowerProduced()*60)+""
+                return "[green]+"+Math.floor(graph.getLastPowerProduced()*10)+""
             })).size((48*6-16)/2,16)
             table.label(prov(()=>{
                 if(!(tile.build&&tile.build.power&&tile.build.power.graph)) return "[red]-P"
                 let graph=tile.build.power.graph
-                return "[red]-"+Math.floor(graph.getLastPowerNeeded()*60)+""
+                return "[red]-"+Math.floor(graph.getLastPowerNeeded()*10)+""
             })).size((48*6-16)/2,16)
             return 16
         },

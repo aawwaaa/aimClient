@@ -15,6 +15,56 @@ exports.init=()=>{
     })
     datas.push({
         valid(tile){
+            return !!tile&&!!Groups.unit.find(a=>a.within(tile.x*8,tile.y*8,8))
+        },
+        add(table,tile){
+            let unit=Groups.unit.find(a=>a.within(tile.x*8,tile.y*8,8))
+            table.image(this.icon).size(16)
+            table.image(Core.atlas.find(unit.type.uiIcon)).size(16)
+            table.add(unit.type.localizedName+" ("+unit.type.name+" #"+unit.type.id+")").size((48*6)-32)
+            return 16
+        },
+        name:"@frag-unit-type",
+        icon:Core.atlas.drawable("aimclient-frag-unit-type")
+    })
+    datas.push({
+        valid(tile){
+            return !!tile&&!!Groups.unit.find(a=>a.within(tile.x*8,tile.y*8,8))
+        },
+        add(table,tile){
+            let unit=Groups.unit.find(a=>a.within(tile.x*8,tile.y*8,8))
+            table.image(this.icon).size(16)
+            let bar=new (Stys.bar)(
+                prov(()=>!unit?"N/A":Math.round(unit.health)+"/"+unit.maxHealth),
+                prov(()=>Color.valueOf("ff0000")),
+                floatp(()=>!unit?0:unit.health/unit.maxHealth)
+            )
+            table.add(bar).size((48*6)-16,16)
+            return 16
+        },
+        name:"@frag-unit-health",
+        icon:Core.atlas.drawable("aimclient-frag-health")
+    })
+    datas.push({
+        valid(tile){
+            return !!tile&&!!Groups.unit.find(a=>a.within(tile.x*8,tile.y*8,8))
+        },
+        add(table,tile){
+            let unit=Groups.unit.find(a=>a.within(tile.x*8,tile.y*8,8))
+            table.image(this.icon).size(16)
+            let bar=new (Stys.bar)(
+                prov(()=>!unit?"N/A":Math.round(unit.shield%unit.maxHealth)+"+"+Math.floor(unit.shield/unit.maxHealth)+"*"+unit.maxHealth),
+                prov(()=>Color.valueOf("4488aa")),
+                floatp(()=>!unit?0:unit.shield%unit.maxHealth/unit.maxHealth)
+            )
+            table.add(bar).size((48*6)-16,16)
+            return 16
+        },
+        name:"@frag-unit-shield",
+        icon:Core.atlas.drawable("aimclient-frag-shield")
+    })
+    datas.push({
+        valid(tile){
             return !!tile
         },
         add(table,tile){
