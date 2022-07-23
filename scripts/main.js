@@ -35,6 +35,9 @@ let funcs=[
     require("About"),
     require("ai/m"),
     require("frags/m"),
+    require("connect/result"),
+    require("connect/gameover"),
+    require("connect/pvpProtect"),
     require("connect/Votes"),
 ]
 let f=require("DefaultInfoT");
@@ -131,6 +134,12 @@ Events.on(UnitCreateEvent,(e)=>{
 Events.on(UnitDestroyEvent,(e)=>{
     events.fire("unitChange")
     events.fire("UnitDestroy",e)
+})
+Events.on(ConfigEvent,(e)=>{
+    if(e.player!=Vars.player) return
+    if(e.tile.block!=Blocks.message) return
+    if(!e.value.startsWith("ac@js=")) return
+    e.tile.configure(Vars.mods.scripts.runConsole(e.value.substring(6)))
 })
 
 require("connect/init")

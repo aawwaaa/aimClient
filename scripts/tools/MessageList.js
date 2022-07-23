@@ -7,6 +7,8 @@ const Stys = require("Styles")
 let exts = eval("extend")
 
 let messages=[]
+let fi=Vars.dataDirectory.child("aimclient").child("temp").child("messages.txt")
+fi.writeString("--------LOG START--------\n\n")
 
 module.exports=()=>{
     let window=new Window()
@@ -19,10 +21,10 @@ module.exports=()=>{
     let p=body.pane(cons(t=>{
         log=(msg,m)=>{
             let ma=m;
-            t.add(msg).growX();
             t.button(Core.atlas.drawable("aimclient-copy"),Stys.di,run(()=>{
                 Core.app.setClipboardText(ma);
-            })).size(20,20).right().get().resizeImage(16);
+            })).size(20,20).left().get().resizeImage(16);
+            t.add(msg).growX();
             t.row();
             if(d){
                 Timer.schedule(()=>p.get().setScrollY(p.get().getMaxY()),0.02)
@@ -44,6 +46,13 @@ module.exports=()=>{
     b.resizeImage(16);
     b.setChecked(d);
     statusBar.label(prov(()=>d?"V":"-")).size(16,32)
+    let ch=statusBar.check("@save",new Boolc(){
+        get(a){
+            Core.settings.put("aimclient-message-history",a?"1":"0")
+        }
+    }).size(64,32).get()
+    ch.setStyle(Stys.check)
+    ch.setChecked(Core.settings.get("aimclient-message-history","1")=="1")
     let c=statusBar.pane(cons(x=>{}))
     statusBar.table(cons(t=>{
         t.button(Core.atlas.drawable("aimclient-download"),Stys.di,run(()=>{
@@ -52,7 +61,7 @@ module.exports=()=>{
                 save:true,
                 onSelect:file=>{
                     let f=new Packages.arc.files.Fi(file);
-                    f.writeString(messages.join("\n\n"))
+                    f.writeString(fi.readString())
                 }
             })
         })).size(32,32).get().resizeImage(16)
@@ -61,7 +70,7 @@ module.exports=()=>{
     let aa=body.add("").get();
     let ab=statusBar.add("").get();
     window.onResize=(w,h)=>{
-        c.size(w-32*3.5,32);
+        c.size(w-32*5.5,32);
         p.size(w,h);
         aa.setText("-")
         ab.setText("-")
@@ -81,5 +90,8 @@ module.exports=()=>{
 }
 
 events.on("msg",str=>{
+    if(Core.settings.get("aimclient-message-history","1")=="0") return
     messages.push(str)
+    messages=messages.slice(0,200)
+    fi.writeString(str+"\n\n",true)
 })

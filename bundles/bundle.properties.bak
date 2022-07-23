@@ -140,6 +140,10 @@ canNotImportDefaultSource=Can not import default sources,import those by yoursel
 
 setWeapon=Set weapon
 statusEffects=Status effects
+
+gameoverTimer=Next map will load in @ sec...
+pvpProtect=PVP protect left @ sec.
+
 #tags 
 Tall=All
 Tstar=Star
@@ -164,6 +168,7 @@ mark-mark=Mark
 
 #broads
 broad-enabled=Broad enabled
+broad-at=(broad)
 broad-self-health=Self health
 broad-self-shield=Self shield
 

@@ -2,6 +2,7 @@ const Manager = require("Manager")
 const VoteTable=require("connect/VoteTable")
 
 module.exports=function(MainWindow){
+    MainWindow.table.table().size(0).row()
     MainWindow.table.table(cons(t=>{
         let draw=(votes)=>{
             t.clear();

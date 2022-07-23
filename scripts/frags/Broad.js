@@ -27,7 +27,7 @@ exports.init=()=>{
             table.image(this.icon).size(16)
             let bar=new (Stys.bar)(
                 prov(()=>!Vars.player.unit()?"N/A":Math.round(Vars.player.unit().shield%Vars.player.unit().maxHealth)+"+"+Math.floor(Vars.player.unit().shield/Vars.player.unit().maxHealth)+"*"+Vars.player.unit().maxHealth),
-                prov(()=>Color.valueOf("4488aa")),
+                prov(()=>Color.valueOf("4488ff")),
                 floatp(()=>!Vars.player.unit()?0:Vars.player.unit().shield%Vars.player.unit().maxHealth/Vars.player.unit().maxHealth)
             )
             table.add(bar).size((48*6)-16,16)

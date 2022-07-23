@@ -54,7 +54,7 @@ exports.init=()=>{
             table.image(this.icon).size(16)
             let bar=new (Stys.bar)(
                 prov(()=>!unit?"N/A":Math.round(unit.shield%unit.maxHealth)+"+"+Math.floor(unit.shield/unit.maxHealth)+"*"+unit.maxHealth),
-                prov(()=>Color.valueOf("4488aa")),
+                prov(()=>Color.valueOf("4488ff")),
                 floatp(()=>!unit?0:unit.shield%unit.maxHealth/unit.maxHealth)
             )
             table.add(bar).size((48*6)-16,16)

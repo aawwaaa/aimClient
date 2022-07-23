@@ -67,3 +67,5 @@ Vars.net.handleClient(Packages.mindustry.net.Packets.Disconnect, (packet) => {
     Manager.events.fire("disconnect")
 })
 require("connect/vote")
+require("connect/result")
+require("connect/gameover")

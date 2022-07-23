@@ -135,6 +135,9 @@ importPluginSource=导入插件源
 
 canNotImportDefaultSource=无法导入默认源,请手动导入.
 
+gameoverTimer=将在 @ 秒后加载地图...
+pvpProtect=PVP保护剩余 @ 秒
+
 setWeapon=设置武器
 statusEffects=状态效果
 #tags 
@@ -161,6 +164,7 @@ mark-mark=标记
 
 #broads
 broad-enabled=启用侧边栏
+broad-at=(侧边栏)
 broad-self-health=自身生命
 broad-self-shield=自身护盾
 
