@@ -92,6 +92,6 @@ module.exports=()=>{
 events.on("msg",str=>{
     if(Core.settings.get("aimclient-message-history","1")=="0") return
     messages.push(str)
-    messages=messages.slice(0,200)
+    if(messages.length>200) messages=messages.slice(1,201)
     fi.writeString(str+"\n\n",true)
 })
