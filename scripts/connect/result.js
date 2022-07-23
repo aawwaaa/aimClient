@@ -7,7 +7,7 @@ const Manager = require("Manager")
 
 module.exports=function(MainWindow){
     MainWindow.table.table().size(0).row()
-    let tc=MainWindow.table.table(cons(t=>{
+    let tc=MainWindow.table.table(Stys.button,cons(t=>{
         t.label(prov(()=>data)).size(48*5,400)
         t.button(Core.atlas.drawable("aimclient-close"),Stys.di,run(()=>{
             hasData=false
