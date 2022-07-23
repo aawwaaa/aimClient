@@ -14,5 +14,5 @@ module.exports=function(MainWindow){
     t.update(run(()=>{
         tc.height((Manager.pvpProtect>Vars.state.tick&&MainWindow.s)*50)
     }))
-    MainWindow.moveY.push(()=>-(MainWindow.s&&MainWindow.protectTimer>Vars.state.tick)*50)
+    MainWindow.moveY.push(()=>-(MainWindow.s&&MainWindow.protectTimer>Vars.state.tick)*25)
 }

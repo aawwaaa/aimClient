@@ -18,5 +18,5 @@ module.exports=function(MainWindow){
     t.update(run(()=>{
         tc.height((MainWindow.s&&hasData)*500)
     }))
-    MainWindow.moveY.push(()=>-(MainWindow.s&&hasData)*500)
+    MainWindow.moveY.push(()=>-(MainWindow.s&&hasData)*250)
 }

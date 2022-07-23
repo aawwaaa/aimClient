@@ -19,5 +19,5 @@ module.exports=function(MainWindow){
     t.update(run(()=>{
         tc.height((Manager.gameoverTimer>Date.now()&&MainWindow.s)*200)
     }))
-    MainWindow.moveY.push(()=>-(MainWindow.s&&MainWindow.gameoverTimer>Date.now())*200)
+    MainWindow.moveY.push(()=>-(MainWindow.s&&MainWindow.gameoverTimer>Date.now())*100)
 }
