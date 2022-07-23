@@ -49,8 +49,8 @@ module.exports.init=function(MainWindow,childs,Manager){
     tc.get().visibility=boolp(()=>Core.settings.get("frag-show-table","1")=="1"&&MainWindow.s)
     ta.visibility=boolp(()=>Core.settings.get("frag-show","1")=="1"&&Vars.state.isGame())
     ta.update(run(()=>{
-        ta.setPosition(Core.input.mouseX()+96+48*3,Core.input.mouseY()-128-ty)
-        ta.toFront()
+        ta.setPosition(Core.input.mouseX()+96+48*3,Core.input.mouseY()-128-ty1)
+        //ta.toFront()
         tc1.height(ty1)
         l2.setText("-")
         l2.setText("")
