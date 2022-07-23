@@ -10,10 +10,10 @@ Vars.netClient.addPacketHandler("gameoverTimer",(time)=>{
 
 module.exports=function(MainWindow){
     MainWindow.table.table().size(0).row()
-    let tc=MainWindow.table.table(cons(t=>{
-        t.label(prov(()=>Manager.gameoverMessage)).size(48*4+120,150).row()
-        t.label(prov(()=>Core.bundle.get("gameoverTimer").replace("@",Math.floor((Manager.gameoverTimer-Date.now())/1000*10)/10))).size(48*4+120,50)
-    })).top().left().height(0).minWidth(48*4+120)
+    let tc=MainWindow.table.table(cons(t=>Stys.button,{
+        t.label(prov(()=>Manager.gameoverMessage)).size(48*5,150).row()
+        t.label(prov(()=>Core.bundle.get("gameoverTimer").replace("@",Math.floor((Manager.gameoverTimer-Date.now())/1000*10)/10))).size(48*5,50)
+    })).top().left().height(0).minWidth(48*5)
     let t=tc.get()
     t.visibility=boolp(()=>MainWindow.s&&Manager.gameoverTimer>Date.now());
     t.update(run(()=>{

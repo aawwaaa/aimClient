@@ -7,8 +7,8 @@ Vars.netClient.addPacketHandler("pvpProtect",(time)=>{
 module.exports=function(MainWindow){
     MainWindow.table.table().size(0).row()
     let tc=MainWindow.table.table(cons(t=>{
-        t.label(prov(()=>Core.bundle.get("pvpProtect").replace("@",Math.floor((Manager.pvpProtect-Date.now())/60/60*10)/10))).size(48*4+120,50)
-    })).top().left().height(0).minWidth(48*4+120)
+        t.label(prov(()=>Core.bundle.get("pvpProtect").replace("@",Math.floor((Manager.pvpProtect-Date.now())/60/60*10)/10))).size(48*5,50)
+    })).top().left().height(0).minWidth(48*5)
     let t=tc.get()
     t.visibility=boolp(()=>MainWindow.s&&Manager.pvpProtect>Vars.state.tick);
     t.update(run(()=>{
