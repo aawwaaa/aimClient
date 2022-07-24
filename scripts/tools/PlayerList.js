@@ -24,10 +24,13 @@ module.exports=(type,data)=>{
                     ly=y;
                     t.row();
                 }
-                let id=p.id-1
+                let id=p.id-1,n=false
                 if(p.name.includes("|")){
                     let spl=p.name.split("|")[1]
-                    if(spl.length==3) id=spl
+                    if(spl.length==3){
+                        id=spl
+                        n=true
+                    }
                 }
                 t.table(Stys.button,cons(t=>{
                     t.table(cons(t=>{
@@ -35,7 +38,7 @@ module.exports=(type,data)=>{
                         t.button(Core.atlas.drawable("aimclient-copy"),Stys.di,run(()=>{
                             Core.app.setClipboardText(p.name+"");
                         })).size(32,32).get().resizeImage(16)
-                        t.add((id+1)+"").size(ww*0.25-32,32)
+                        t.add((n?id:id+1)+"").size(ww*0.25-32,32)
                         t.button(Core.atlas.drawable("aimclient-copy"),Stys.di,run(()=>{
                             Core.app.setClipboardText(id+"");
                         })).size(32,32).get().resizeImage(16)
