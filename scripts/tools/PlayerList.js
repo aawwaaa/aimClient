@@ -1,3 +1,5 @@
+//thank 144_ for gives me the inspiration
+
 const Window = require("Window");
 const Manager = require("Manager");
 const Stys = require("Styles");
