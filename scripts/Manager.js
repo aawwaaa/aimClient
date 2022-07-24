@@ -23,7 +23,7 @@ function PluginMeta(){
 module.exports={
     load:false,
 
-    version:"1.1.1",
+    version:"1.1.2",
     versionType:"c",
     /**
      * c:public
@@ -101,6 +101,8 @@ module.exports={
             })
         }
     },
+    
+    playerOp:[],
 
     openFileMethods:{},
     openFile:function(fullPath){

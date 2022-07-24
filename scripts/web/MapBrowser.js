@@ -140,7 +140,12 @@ module.exports=(type,data)=>{
                      */
                     let ma=map
                     t.table(cons(t=>{
-                        t.label(prov(()=>"[gray]"+ma.id)).size(ww-32,32).left()
+                        t.label(prov(()=>"[gray]"+ma.id)).size(ww-64,32).left()
+                        let butt=t.button(Core.atlas.drawable("aimclient-vote"),Stys.di,run(()=>{
+                            Call.sendChatMessage(";nethostx "+ma.id)
+                        })).size(32).get()
+                        butt.resizeImage(16)
+                        butt.setDisabled(!Manager.connected)
                         t.button(Core.atlas.drawable("aimclient-download"),Stys.di,run(()=>{
                             let statStr="@mapDownloading"
                             let hasErr=false

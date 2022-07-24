@@ -11,7 +11,7 @@ var obj={
         this.markIcons.mark=Core.atlas.find("aimclient-mark") 
         let ru=null;
         //for(let a in MainWindow) print(a)
-        let b=MainWindow.bottomButtons.button(Core.atlas.drawable("aimclient-targ"),Stys.togglei,run(()=>{ru()})).size(48,48).left().top().get()
+        let b=MainWindow.bottomButtons.button(Core.atlas.drawable("aimclient-targ"),Stys.togglei,run(()=>{ru()})).size(42).left().top().get()
         b.resizeImage(32)
         let l1;
         let tc=MainWindow.table.table(Stys.button,cons(table=>{

@@ -7,7 +7,7 @@ let buttons=[]
 let total=0
 module.exports.init=function(MainWindow,childs,Manager){
     let ru=null;
-    let b=MainWindow.bottomButtons.button(Core.atlas.drawable("aimclient-ai"),Stys.togglei,run(()=>{ru()})).size(48,48).left().top().get()
+    let b=MainWindow.bottomButtons.button(Core.atlas.drawable("aimclient-ai"),Stys.togglei,run(()=>{ru()})).size(42).left().top().get()
     b.resizeImage(32)
     MainWindow.table.table().size(0).row()
     let l1;

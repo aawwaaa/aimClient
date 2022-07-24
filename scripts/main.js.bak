@@ -33,11 +33,11 @@ let funcs=[
     require("Server"),
     require("Settings"),
     require("About"),
-    require("ai/m"),
+    //require("ai/m"),
     require("frags/m"),
     require("connect/result"),
-    //require("connect/gameover"),
-    //require("connect/pvpProtect"),
+    require("connect/gameover"),
+    require("connect/pvpProtect"),
     require("connect/Votes"),
 ]
 let f=require("DefaultInfoT");

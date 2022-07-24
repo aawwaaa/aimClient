@@ -1,5 +1,6 @@
 const Window = require("Window");
 const Manager = require("Manager");
+const Selectors = require("selectors/Selectors")
 const Stys = require("Styles")
 
 function MapMeta(){
@@ -33,219 +34,12 @@ module.exports=(type,data)=>{
      */
 
     let body=new Table();
-    let source={
-        tags:{
-            all:"@Tall",
-            star:"@Tstar",
-            trash:"@Ttrash",
-            nonstandard:"@TnonStandard",
-            survival:"@Tsurvival",
-            attack:"@Tattack",
-            pvp:"@Tpvp",
-            sandbox:"@Tsandbox",
-            editor:"@Teditor",
-            jsmap:"@TjsMap",
-        },
-        tagsConvert:{
-            survival:"tags-1",
-            attack:"tags-2",
-            pvp:"tags-3",
-            sandbox:"tags-4",
-            editor:"tags-8",
-            jsMap:"tags-11",
-            nonstandard:"tags-14",
-        },
-        rootURL:"http://mindustry.vicp.io:7002/api",
-        /**
-         * 
-         * @param {function(MapMeta[]):void} func 
-         */
-        list(func){
-            Http.get(this.rootURL+"/maps",r=>{
-                let str=new java.lang.String(r.getResult(),"utf-8");
-                let json=eval("("+str+")");
-                let maps=json.map(m=>{
-                    let map=new MapMeta();
-                    map.id=m.id;
-                    map.mapName=m.mapName.replace(/<a style="color:.*?">/g,(a)=>a.replace(">","").replace("<a style=\"color:",""));
-                    map.author=m.author;
-                    map.desc=m.desc;
-                    map.tags=m.tags;
-                    return map;
-                })
-                func(maps);
-            })
-        },
-        /**
-         * 
-         * @param {MapMeta[]} maps 
-         * @param {string} searchKey
-         * @param {string} tag
-         * @returns {MapMeta[]}
-         */
-        search(maps,searchKey,tag){
-            let search=searchKey.toLowerCase();
-            let n=(m)=>{
-                if(m.mapName.toLowerCase().indexOf(search)>=0)return true;
-                if(m.author.toLowerCase().indexOf(search)>=0)return true;
-                if(m.desc.toLowerCase().indexOf(search)>=0)return true;
-                if((m.id+"").indexOf(search)>=0)return true;
-                if(search=="") return true;
-                return false
-            }
-            if(!searchKey)return maps.filter(m=>(m.tags&&m.tags.includes(tag))||(tag=="all"));
-            return maps.filter(m=>{
-                if(((m.tags&&m.tags.includes(tag))||(tag=="all"))&&n(m))return true;
-                return false;
-            })
-        },
-        // /**
-        //  * 
-        //  * @param {MapMeta} mapMeta 
-        //  * @param {Fi} fi 
-        //  * @param {string} usid 
-        //  * @param {function(string):void} func
-        //  */
-        // upload(mapMeta,fi,usid,func){
-        //     let OutputStreamWriter=java.io.OutputStreamWriter;
-        //     let URL=java.net.URL;
-        //     //using multipart/type-data POST
-
-        //     let sb=new java.util.StringBuffer();
-        //     let sendUrl=new URL(new java.lang.String(this.rootURL+"/upload").twim())
-        //     let conn=sendUrl.openConnection();
-        //     conn.setDoOutput(true);
-        //     let rand=new java.lang.String(Math.random()+"").replace(".","");
-        //     let boundary=new java.lang.String("---------------------------"+rand);
-        //     let o=new OutputStreamWriter(conn.getOutputStream());
-        //     var out={
-        //         sb:new java.util.StringBuilder(),
-        //         write(str){
-        //             this.sb.append(str);
-        //         },
-        //         out(){
-        //             o.write(this.sb.toString());
-        //         }
-        //     }
-        //     mapMeta.usid=usid;
-        //     for(let key in mapMeta){
-        //         if(key=="id") continue;
-        //         if(key=="tags") continue;
-        //         out.write("--"+boundary+"\r\n");
-        //         out.write("Content-Disposition: form-data; mapName=\""+key+"\"\r\n\r\n");
-        //         out.write(encodeURIComponent(mapMeta[key])+"\r\n");
-        //     }
-        //     delete mapMeta.usid;
-        //     for(let tag of mapMeta.tags){
-        //         out.write("--"+boundary+"\r\n");
-        //         out.write("Content-Disposition: form-data; mapName=\""+this.tagsConvert[tag]+"\"\r\n\r\n");
-        //         out.write(encodeURIComponent(true)+"\r\n");
-        //     }
-        //     out.write("--"+boundary+"\r\n");
-        //     out.write("Content-Disposition: form-data; mapName=\"file\"; filename=\""+fi.getName()+"\"\r\n");
-        //     out.write("Content-Type: application/octet-stream\r\n\r\n");
-        //     conn.setRequestProperty("Content-Type","multipart/form-data; boundary="+boundary);
-        //     conn.setRequestProperty("Content-Length",String(out.sb.length()+fi.size()));
-        //     out.out();
-        //     out.write(fi.readBytes());
-        //     out.write("\r\n--"+boundary+"--\r\n");
-
-        //     o.flush();
-        //     o.close();
-        //     let r=new java.lang.String(conn.getInputStream().readBytes(),"utf-8");
-        //     func(r)
-        // },
-        // /**
-        //  * 
-        //  * @param {MapMeta} mapMeta 
-        //  * @param {string} usid 
-        //  * @param {function(string):void} func
-        //  */
-        // delete(mapMeta,usid,func){
-        //     Http.get(this.rootURL+"/delete?usid="+usid+"&id="+mapMeta.id,r=>{
-        //         let str=new java.lang.String(r.getResult(),"utf-8");
-        //         func(str);
-        //     })
-        // },
-        // /**
-        //  * 
-        //  * @param {MapMeta} mapMeta 
-        //  * @param {string} usid 
-        //  * @param {function(string):void} func 
-        //  * @param {Fi?} fi
-        //  */
-        // update(mapMeta,usid,func,fi){
-        //     let OutputStreamWriter=java.io.OutputStreamWriter;
-        //     let URL=java.net.URL;
-        //     //using multipart/type-data POST
-
-        //     let sb=new java.util.StringBuffer();
-        //     let sendUrl=new URL(new java.lang.String(this.rootURL+"/upload").twim())
-        //     let conn=sendUrl.openConnection();
-        //     conn.setDoOutput(true);
-        //     let rand=new java.lang.String(Math.random()+"").replace(".","");
-        //     let boundary=new java.lang.String("---------------------------"+rand);
-        //     let o=new OutputStreamWriter(conn.getOutputStream());
-        //     var out={
-        //         sb:new java.util.StringBuilder(),
-        //         write(str){
-        //             this.sb.append(str);
-        //         },
-        //         out(){
-        //             o.write(this.sb.toString());
-        //         }
-        //     }
-        //     mapMeta.usid=usid;
-        //     for(let key in mapMeta){
-        //         if(key=="id") continue;
-        //         if(key=="tags") continue;
-        //         out.write("--"+boundary+"\r\n");
-        //         out.write("Content-Disposition: form-data; mapName=\""+key+"\"\r\n\r\n");
-        //         out.write(encodeURIComponent(mapMeta[key])+"\r\n");
-        //     }
-        //     delete mapMeta.usid;
-        //     for(let tag of mapMeta.tags){
-        //         out.write("--"+boundary+"\r\n");
-        //         out.write("Content-Disposition: form-data; mapName=\""+this.tagsConvert[tag]+"\"\r\n\r\n");
-        //         out.write(encodeURIComponent(true)+"\r\n");
-        //     }
-        //     if(){
-        //         out.write("--"+boundary+"\r\n");
-        //         out.write("Content-Disposition: form-data; mapName=\"file\"; filename=\""+fi.getName()+"\"\r\n");
-        //         out.write("Content-Type: application/octet-stream\r\n\r\n");
-        //     }
-        //     conn.setRequestProperty("Content-Type","multipart/form-data; boundary="+boundary);
-        //     conn.setRequestProperty("Content-Length",String(out.sb.length()+fi.size()));
-        //     out.out();
-        //     out.write(fi.readBytes());
-        //     out.write("\r\n--"+boundary+"--\r\n");
-
-        //     o.flush();
-        //     o.close();
-        //     let r=new java.lang.String(conn.getInputStream().readBytes(),"utf-8");
-        //     func(r)
-        // },
-        /**
-         * 
-         * @param {MapMeta} mapMeta 
-         * @param {string} usid 
-         * @param {function(Fi):void} func 
-         */
-        download(mapMeta,usid,func){
-            Http.get(this.rootURL+"/getInfo?usid="+usid+"&id="+mapMeta.id,r=>{
-                let str=new java.lang.String(r.getResult(),"utf-8");
-                let json=eval("("+str+")");
-                Http.get(this.rootURL+"/download?name="+encodeURIComponent(json.name),r=>{
-                    let fi=Vars.dataDirectory.child("temp"+Math.floor(Math.random()*10)+".msav");
-                    fi.writeBytes(r.getResult());
-                    func(fi);
-                })
-            })
-        }
-    }
+    let source=Manager.sources.maps.get(Core.settings.get("ac-map-source",Manager.sources.maps.getDefaultSource().toString()))
+    if(source==undefined) source=Manager.sources.maps.getDefaultSource()
     let draw;
     let maps=[];
     let flush=()=>{
+        if(source==null) return;
         for(let k in source.tags){
             source.tags[k]=source.tags[k].startsWith("@")?Core.bundle.get(source.tags[k].substring(1)):source.tags[k]
         }
@@ -256,6 +50,7 @@ module.exports=(type,data)=>{
             })
         })
     }
+    let sourceSelect;
     let search;
     let ta=[]
     let tagsT;
@@ -266,7 +61,18 @@ module.exports=(type,data)=>{
     let amount;
     let top=body.table(cons(t=>{
         ta.push(t.table(cons(t=>{
-            search=t.field("",cons(a=>{
+            sourceSelect=Selectors.objectSelectButton(window,t,{
+                onSelect(o){
+                    if(o!=null){
+                        source=o
+                        Core.settings.put("ac-map-source",o.toString())
+                        flush()
+                    }
+                },
+                datas:Manager.sources.maps.sources
+            })
+            sourceSelect.setObject(source)
+            search=t.field("",Stys.textField,cons(a=>{
                 draw(window.getW())
             }))
             t.button(Core.atlas.drawable("aimclient-reload"),Stys.di,run(()=>{
@@ -282,7 +88,7 @@ module.exports=(type,data)=>{
                 if(page.get().getText()<0) page.get().setText(0+"")
                 draw(window.getW())
             })).size(32,32).get().resizeImage(16);
-            page=t.field("0",cons(a=>{
+            page=t.field("0",Stys.textField,cons(a=>{
                 draw(window.getW())
             }))
             pageL=t.label(prov(x=>{return "/"+Math.floor(amount/30)}))
@@ -296,6 +102,7 @@ module.exports=(type,data)=>{
     body.row()
     let pane=body.pane(cons(t=>{
         draw=(w)=>{
+            if(source==null) return;
             ta[1].get().clear()
             let l=0;
             for(let _ in source.tags){l++}
@@ -308,28 +115,22 @@ module.exports=(type,data)=>{
             }
             
             t.clear();
-            let width=Math.ceil(w/500)-1;
+            let width=Math.floor(w/500);
             if(width==0) width=1
             let wid=width*500;
             let ww=wid/width;
+            // print(width)
             let id=0;
-            let ly=[];
-            let ts=[]
-            for(let i=0;i<width;i++){
-                ly[i]=0;
-                ts[i]=t.table().width(ww).get();
-            }
+            let ly=0
             amount=source.search(maps,search.get().getText(),currTag).length
             let p=+page.get().getText()
             for(let map of source.search(maps,search.get().getText(),currTag).slice(p*30,p*30+30)){
                 let y=Math.floor(id/width);
-                let x=id%width;
-                y*=32;
-                if(y!=ly[x]){
-                    ly[x]=y;
-                    ts[x].row();
+                if(y!=ly){
+                    ly=y;
+                    t.row();
                 }
-                ts[x].table(Stys.button,cons(t=>{
+                t.table(Stys.button,cons(t=>{
                     /**
                      * ===============================
                      * id       name        [download]
@@ -348,17 +149,17 @@ module.exports=(type,data)=>{
                             w.setTitle("@mapDownload")
                             let b=new Table();
                             b.add(ma.mapName).row()
-                            b.label(prov(()=>statStr)).size(500,32).row()
-                            let areaa=b.area("",cons(a=>{})).size(500,0).touchable(Touchable.disabled)
+                            b.label(prov(()=>statStr)).size(480,32).row()
+                            let areaa=b.area("",cons(a=>{})).size(480,0).touchable(Touchable.disabled)
                             let area=areaa.get()
                             area.visibility=boolp(()=>hasErr)
                             b.row()
-                            let button=b.button("@cancel",run(()=>{
+                            let button=b.button("@cancel",Stys.dt,run(()=>{
                                 canceled=true
                                 w.close()
-                            })).size(500,32).get()
+                            })).size(480,32).get()
                             w.setBody(b)
-                            w.setSize(500,80)
+                            w.setSize(480,80)
                             w.setResizable(false)
                             w.center()
                             w.show()
@@ -371,6 +172,7 @@ module.exports=(type,data)=>{
                                         Vars.maps.importMap(fi);
                                         statStr="@mapDownloadDone"
                                         button.setText("@ok")
+                                        fi.delete()
                                     }catch(e){
                                         statStr="@mapImportFail"
                                         hasErr=true
@@ -410,8 +212,8 @@ module.exports=(type,data)=>{
                     //t.image().color(Color.gray).width(ww).height(2)
                     //t.row()
                     t.add("[white]").size(0,0)
-
-                })).width(ww).row()
+                })).width(ww)
+                id++
             }
         }
     }))
@@ -424,7 +226,8 @@ module.exports=(type,data)=>{
         draw(w)
         top.size(w,32*3)
         ta.forEach(t=>t.size(w,32))
-        search.size(w-32,32)
+        sourceSelect.cell.size((w-32)*0.3,32)
+        search.size((w-32)*0.7,32)
         page.size((w-64)*0.45,32)
         pageL.size((w-64)*0.55,32)
         pane.size(w,h-32*3)

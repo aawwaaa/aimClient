@@ -94,7 +94,7 @@ module.exports={
                     t.add(that.menuT).width(48*3+24*1);
                 })).size(48*3+24,7*24).get().setStyle(Styles.smallPane);
                 t.row()
-                t.add(that.bottomButtons).width(48*3+24).height(48).left()
+                t.add(that.bottomButtons).width(48*3+24).height(42).left()
                 that.bottomButtons.setBackground(Stys.buttonNoBackground)
             })).size(48*3+24,7*24+48);
             t.table(cons(t=>{
@@ -150,7 +150,6 @@ module.exports={
         this.moveY.push(()=>-(this.showingMenu*4*24))
         this.showMenu(true)
         this.showMenu(true)
-        Marks.init()
     },
     showMenu(canClose){
         if(canClose){

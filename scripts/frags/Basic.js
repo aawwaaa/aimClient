@@ -34,6 +34,19 @@ exports.init=()=>{
         add(table,tile){
             let unit=Groups.unit.find(a=>a.within(tile.x*8,tile.y*8,8))
             table.image(this.icon).size(16)
+            table.add("[#"+unit.team.color+"]"+unit.team).size((48*6)-16)
+            return 16
+        },
+        name:"@frag-unit-team",
+        icon:Core.atlas.drawable("aimclient-frag-team")
+    })
+    datas.push({
+        valid(tile){
+            return !!tile&&!!Groups.unit.find(a=>a.within(tile.x*8,tile.y*8,8))
+        },
+        add(table,tile){
+            let unit=Groups.unit.find(a=>a.within(tile.x*8,tile.y*8,8))
+            table.image(this.icon).size(16)
             let bar=new (Stys.bar)(
                 prov(()=>!unit?"N/A":Math.round(unit.health)+"/"+unit.maxHealth),
                 prov(()=>Color.valueOf("ff0000")),

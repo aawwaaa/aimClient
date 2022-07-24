@@ -3,6 +3,7 @@ let files=require("tools/Files")
 let textEditor=require("tools/TextEditor")
 let testWindow=require("tools/TestWindow")
 let messageList=require("tools/MessageList")
+let playerList=require("tools/PlayerList")
 
 let world=require("tools/World")
 let Stys=require("Styles")
@@ -15,11 +16,12 @@ module.exports=(MainWindow,childs,Manager)=>{
     }
     world(MainWindow,childs.tools.childs,Manager);
     childs.tools.childs=Object.assign(childs.tools.childs,{
-        testWindow:{
+        /*testWindow:{
             name:"TestWindow",
             hasChild:false,
             run:()=>testWindow()
         },
+        */
         files:{
             name:"@files",
             icon:Core.atlas.drawable("aimclient-files"),
@@ -51,9 +53,21 @@ module.exports=(MainWindow,childs,Manager)=>{
             run:()=>{
                 messageList();
             }
+        },
+        playerList:{
+            name:"@playerList",
+            icon:Core.atlas.drawable("aimclient-playerList"),
+            hasChild:false,
+            run:()=>{
+                playerList();
+            }
         }
     })
+    require("ai/m")(MainWindow,childs,Manager)
     MainWindow.bottomButtons.button(Core.atlas.drawable("aimclient-messageList"),Stys.di,run(()=>{
         messageList();
-    })).size(48).get().resizeImage(16)
+    })).size(42).get().resizeImage(16)
+    MainWindow.bottomButtons.button(Core.atlas.drawable("aimclient-playerList"),Stys.di,run(()=>{
+        playerList();
+    })).size(42).get().resizeImage(16)
 }

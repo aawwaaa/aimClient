@@ -1,2 +1,6 @@
 require("ai/Main")
-module.exports=(MainWindow,childs,Manager)=>require("ai/Main").init(MainWindow,childs,Manager)
+require("Marks")
+module.exports=(MainWindow,childs,Manager)=>{
+    require("Marks").init()
+    require("ai/Main").init(MainWindow,childs,Manager)
+}

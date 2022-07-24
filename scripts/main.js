@@ -24,6 +24,7 @@ MainWindow.menus={
         }
     }
 }
+require("ai/m")
 let funcs=[
     require("Admin"),
     require("Windows"),
@@ -33,7 +34,7 @@ let funcs=[
     require("Server"),
     require("Settings"),
     require("About"),
-    require("ai/m"),
+    //require("ai/m"),
     require("frags/m"),
     require("connect/result"),
     require("connect/gameover"),
