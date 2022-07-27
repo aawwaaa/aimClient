@@ -26,12 +26,11 @@ module.exports=(type,data)=>{
                     ly=y;
                     t.row();
                 }
-                let id=p.id-1,n=false
+                let pid=p.id
                 if(p.name.includes("|")){
-                    let spl=p.name.split("|")[1]
+                    let spl=p.name.split("|")[1].replace("[gray]","").replace("[]","")
                     if(spl.length==3){
-                        id=spl
-                        n=true
+                        pid=spl
                     }
                 }
                 t.table(Stys.button,cons(t=>{
@@ -40,16 +39,16 @@ module.exports=(type,data)=>{
                         t.button(Core.atlas.drawable("aimclient-copy"),Stys.di,run(()=>{
                             Core.app.setClipboardText(p.name+"");
                         })).size(32,32).get().resizeImage(16)
-                        t.add((n?id:id+1)+"").size(ww*0.25-32,32)
+                        t.add((pid)+"").size(ww*0.25-32,32)
                         t.button(Core.atlas.drawable("aimclient-copy"),Stys.di,run(()=>{
-                            Core.app.setClipboardText(id+"");
+                            Core.app.setClipboardText(pid+"");
                         })).size(32,32).get().resizeImage(16)
                     })).size(ww,32).row()
                     t.table(cons(t=>{
-                        let w=ww/Manager.playerOp.filter(a=>a.valid(p,id)).length
-                        Manager.playerOp.filter(a=>a.valid(p,id)).forEach(a=>{
+                        let w=ww/Manager.playerOp.filter(a=>a.valid(p,pid)).length
+                        Manager.playerOp.filter(a=>a.valid(p,pid)).forEach(a=>{
                             let butt=t.button(a.icon?Core.atlas.drawable(a.icon):a.name,a.icon?Stys.di:Stys.dt,run(()=>{
-                                a.run(p,id)
+                                a.run(p,pid)
                             })).size(w,32).get()
                             if(a.icon){
                                 butt.resizeImage(16)
