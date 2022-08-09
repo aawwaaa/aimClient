@@ -93,7 +93,7 @@ WtextEditor=Text editor
 WimageViewer=Image viewer
 Wconsole=Console
 Wcrashes=Crashes
-Wfiles=files
+Wfiles=Files
 WpluginInfo=Plugin info
 WpluginManage=Plugin manage
 WmessageList=Message list
@@ -145,13 +145,15 @@ statusEffects=Status effects
 gameoverTimer=Next map will load in @ sec...
 pvpProtect=PVP protect left @ min
 
-move=Move ti
+move=Move to
 tap=Tap
 tapMsg=tap @, notice message list.
 kick=Kick
 test=Test
 mute=Mute
 forceOb=Force ob
+
+joystick=Joy stick
 
 #tags 
 Tall=All
@@ -180,6 +182,7 @@ broad-enabled=Broad enabled
 broad-at=(broad)
 broad-self-health=Self health
 broad-self-shield=Self shield
+broad-self-ammo=Self ammo
 
 #frags
 frag-settings=Frag settings
@@ -189,6 +192,7 @@ frag-unit-type=Unit type
 frag-unit-team=Unit team
 frag-unit-health=Unit health
 frag-unit-shield=Unit shield
+frag-unit-ammo=Unit ammo
 frag-block=Block
 frag-floor=Floor
 frag-overlay=Overlay

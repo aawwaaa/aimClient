@@ -18,7 +18,7 @@ module.exports=(unit)=>{
     let body=new Table();
     let draw;
     let eff=null;
-    body.table(cons(t=>{
+    let pane=body.pane(cons(t=>{
         draw=(w)=>{
             t.clear();
             t.table(cons(t=>{
@@ -260,6 +260,7 @@ module.exports=(unit)=>{
     let aa=body.add("").get();
     let ab=statusBar.add("").get();
     window.onResize=(w,h)=>{
+        pane.size(w,h)
         draw(w)
         aa.setText("-")
         ab.setText("-")

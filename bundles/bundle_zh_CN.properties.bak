@@ -142,12 +142,15 @@ pvpProtect=PVP保护剩余 @ 分钟
 setWeapon=设置武器
 statusEffects=状态效果
 
+move=移动至
 tap=戳
 tapMsg=戳了戳 @, 注意消息列表.
 kick=踢
 test=Test
 mute=禁言
 forceOb=强制ob
+
+joystick=摇杆
 
 #tags 
 Tall=全部
@@ -176,6 +179,7 @@ broad-enabled=启用侧边栏
 broad-at=(侧边栏)
 broad-self-health=自身生命
 broad-self-shield=自身护盾
+broad-self-ammo=自身弹药
 
 #frags
 frag-settings=悬浮窗设置
@@ -185,6 +189,7 @@ frag-unit-type=单位类型
 frag-unit-team=单位队伍
 frag-unit-health=单位生命
 frag-unit-shield=单位护盾
+frag-unit-ammo=单位弹药
 frag-block=方块
 frag-floor=地板
 frag-overlay=覆盖层

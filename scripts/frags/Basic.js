@@ -78,6 +78,24 @@ exports.init=()=>{
     })
     datas.push({
         valid(tile){
+            return !!tile&&!!Groups.unit.find(a=>a.within(tile.x*8,tile.y*8,8))&&Vars.state.rules.unitAmmo
+        },
+        add(table,tile){
+            let unit=Groups.unit.find(a=>a.within(tile.x*8,tile.y*8,8))
+            table.image(this.icon).size(16)
+            let bar=new (Stys.bar)(
+                prov(()=>!unit?"N/A":Math.round(unit.ammo)+"/"+unit.type.ammoCapacity+"("+(unit.type.ammoType instanceof ItemAmmoType?unit.type.ammoType.item.localizedName:Core.bundle.get("power"))+")"),
+                prov(()=>unit.type.ammoType.barColor()),
+                floatp(()=>!unit?0:unit.ammo/unit.type.ammoCapacity)
+            )
+            table.add(bar).size((48*6)-16,16)
+            return 16
+        },
+        name:"@frag-unit-ammo",
+        icon:Core.atlas.drawable("aimclient-frag-ammo")
+    })
+    datas.push({
+        valid(tile){
             return !!tile
         },
         add(table,tile){

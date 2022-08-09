@@ -23,7 +23,7 @@ function PluginMeta(){
 module.exports={
     load:false,
 
-    version:"1.1.2.2",
+    version:"1.1.3",
     versionType:"c",
     /**
      * c:public
@@ -367,7 +367,7 @@ module.exports={
             init(){
                 for(let fi of this.dir.list()){
                     let str=fi.readString()
-                    Vars.mods.scripts.runConsole("Manager.sources.maps.csr="+str)
+                    print(Vars.mods.scripts.runConsole("Manager.sources.maps.csr="+str))
                     let obj=this.csr
                     obj.str=str
                     obj.type="map"

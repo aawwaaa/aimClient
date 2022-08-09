@@ -218,7 +218,7 @@ module.exports=(unit)=>{
                     let i=t.field("",Stys.textField,cons(a=>{})).size(w-232,32).get()
                     i.setValidator(new TextField.TextFieldValidator(){
                         valid(text){
-                            return text==""|(!isNaN(text));
+                            return text==""||(!isNaN(text));
                         }
                     });
                     t.button(Core.atlas.drawable("aimclient-add"),Stys.di,run(()=>{

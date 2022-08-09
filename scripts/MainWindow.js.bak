@@ -57,13 +57,15 @@ module.exports={
                             lastY=y;
                             return true;
                         },
-                        touchUp(event,x,y,pointer,button){
-                            let mx=x-lastX;
-                            let my=y-lastY;
-                            that.x+=mx;
-                            that.y+=my;
+                        touchDragged(event,x,y,pointer,button){
+                            let v=that.table.localToStageCoordinates(Tmp.v1.set(x, y));
+                            that.x = -lastX + v.x;
+                            that.y = -lastY + v.y;
+                            that.x=that.x;
+                            that.y=that.y;
                             Core.settings.put("aimclient-mainwindow-x",that.x.toString());
                             Core.settings.put("aimclient-mainwindow-y",that.y.toString());
+                            return true
                         }
                     }));
 
@@ -150,7 +152,6 @@ module.exports={
         this.moveY.push(()=>-(this.showingMenu*4*24))
         this.showMenu(true)
         this.showMenu(true)
-        Marks.init()
     },
     showMenu(canClose){
         if(canClose){
