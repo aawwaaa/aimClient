@@ -23,7 +23,7 @@ function PluginMeta(){
 module.exports={
     load:false,
 
-    version:"1.1.3",
+    version:"1.1.3.1",
     versionType:"c",
     /**
      * c:public

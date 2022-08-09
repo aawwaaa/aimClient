@@ -58,7 +58,7 @@ let c=new (require("ai/Main").Controller)(
                 unit.aim(Vars.player.mouseX = Core.input.mouseWorldX(), Vars.player.mouseY = Core.input.mouseWorldY());
             }else if(Vars.control.input.target == null){
                 Vars.player.shooting = false;
-                if(Core.settings.getBool("autotarget") && !(player.unit() instanceof BlockUnitUnit && Vars.player.unit().tile() instanceof ControlBlock && !Vars.player.unit().tile().shouldAutoTarget())){
+                if(Core.settings.getBool("autotarget") && !(Vars.player.unit() instanceof BlockUnitUnit && Vars.player.unit().tile() instanceof ControlBlock && !Vars.player.unit().tile().shouldAutoTarget())){
                     if(Vars.player.unit().type.canAttack){
                         Vars.control.input.target = Units.closestTarget(unit.team, unit.x, unit.y, range, u => u.checkTarget(type.targetAir, type.targetGround), u => type.targetGround);
                     }
