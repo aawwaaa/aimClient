@@ -77,7 +77,15 @@ let newInput=Vars.mobile?
             }else if(module.exports.followUnit) this.super$updateMovement(unit)
         }
     }):
-    extend(DesktopInput,{})
+    extend(DesktopInput,{
+        updateMovement(unit){
+            if(module.exports.currentController){
+                module.exports.currentController.unit=unit
+                module.exports.currentController.updateUnit()
+            }
+            this.super$updateMovement(unit)
+        }
+    })
 Vars.control.input=newInput
 })
 
