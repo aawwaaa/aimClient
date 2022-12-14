@@ -44,7 +44,7 @@ let buttonDisabledDrawable=drawable(function(x,y,ox,oy,w,h,sx,sy,r){
     Lines.line(x+w-2,y,x+w-2,y+h-2)
     Lines.line(x,y+h-2,x+w-2,y+h-2)
     Draw.color(Color.gray)
-    Draw.alpha(0.6)
+    Draw.alpha(0.8)
     Draw.rect(rect,x+(w-2)/2,y+(h-2)/2,w-2,h-2)
     Draw.reset()
 })
@@ -92,7 +92,7 @@ let buttonTexDrawable=drawable(function(x,y,ox,oy,w,h,sx,sy,r){
     Lines.line(x+w-2,y,x+w-2,y+h-2)
     Lines.line(x,y+h-2,x+w-2,y+h-2)
     Draw.color(Color.black)
-    Draw.alpha(0.3)
+    Draw.alpha(0.8)
     Draw.rect(rect,x+(w-2)/2,y+(h-2)/2,w-2,h-2)
     Draw.reset()
 })
@@ -132,7 +132,7 @@ let textFieldCursorDrawable=drawable(function(x,y,ox,oy,w,h,sx,sy,r){
 },1,28)
 let textFieldSelectionDrawable=drawable(function(x,y,ox,oy,w,h,sx,sy,r){
     Draw.color(module.exports.themeColor)
-    Draw.alpha(0.5)
+    Draw.alpha(0.8)
     Draw.rect(rect,x+w/2,y+h/2,w,h)
 })
 
