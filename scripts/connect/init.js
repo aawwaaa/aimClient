@@ -25,7 +25,7 @@ Vars.netClient.addPacketHandler("AimClientConnectResponse",(data)=>{
     if(!Manager.load) return;
     Vars.player.sendMessage("[ACc] "+Core.bundle.get("conn1"))
     Manager.connected=true
-    Manager.connectData=eval("("+data+")")
+    Manager.connectData=JSON.parse(data)
     let mods=[]
     Vars.mods.eachEnabled(cons(m=>{
         mods.push({
