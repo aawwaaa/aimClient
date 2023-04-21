@@ -1,7 +1,7 @@
 const Manager = require("Manager")
 
 Vars.netClient.addPacketHandler("votes",(votes)=>{
-    Manager.votes=eval("("+votes+")")
+    Manager.votes=JSON.parse(votes)
     Manager.events.fire("voteUpdate",Manager.votes)
 })
 
